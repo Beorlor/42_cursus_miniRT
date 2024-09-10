@@ -6,7 +6,7 @@
 /*   By: jedurand <jedurand@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:49:32 by fbelotti          #+#    #+#             */
-/*   Updated: 2024/09/09 17:29:31 by jedurand         ###   ########.fr       */
+/*   Updated: 2024/09/10 16:22:06 by jedurand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,6 +298,7 @@ int			parse_cylinder_data(char **split, t_object *obj);
 int			parse_cylinder(char **split, t_data *data);
 int			parse_cone_data(char **split, t_object *obj);
 int			parse_cone(char **split, t_data *data);
+int	is_split_valid(char **split1, char **split2, char **split3);
 
 void		free_objects(t_object *objects);
 void		free_split(char **split);

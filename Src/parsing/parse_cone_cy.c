@@ -6,7 +6,7 @@
 /*   By: jedurand <jedurand@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:24:15 by jedurand          #+#    #+#             */
-/*   Updated: 2024/09/10 13:32:41 by jedurand         ###   ########.fr       */
+/*   Updated: 2024/09/10 16:20:42 by jedurand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,14 @@ int	parse_cylinder_data(char **split, t_object *obj)
 	char	**axis_split;
 	char	**color_split;
 
-    if (!split[1] || !split[2] || !split[3]|| !split[4]|| !split[5])
-    {
-        ft_printf("Error: Invalid cylinder format\n");
-        return (1);
-    }
+	if (!split[1] || !split[2] || !split[3] || !split[4] || !split[5])
+		return (1);
 	pos_split = ft_split(split[1], ',');
 	axis_split = ft_split(split[2], ',');
 	color_split = ft_split(split[5], ',');
-	if (!pos_split || !pos_split[0] || !pos_split[1] || !pos_split[2] ||
-    	!axis_split || !axis_split[0] || !axis_split[1] || !axis_split[2] ||
-    	!color_split || !color_split[0] || !color_split[1] || !color_split[2])
+	if (!is_split_valid(pos_split, axis_split, color_split))
 		return (free_split(pos_split), free_split(axis_split),
-			free_split(color_split),
-			ft_printf("Error: Invalid cylinder format\n"), 1);
+			free_split(color_split), 1);
 	obj->pos.x = ft_atof(pos_split[0]);
 	obj->pos.y = ft_atof(pos_split[1]);
 	obj->pos.z = ft_atof(pos_split[2]);
@@ -43,9 +37,8 @@ int	parse_cylinder_data(char **split, t_object *obj)
 	obj->color.r = ft_atoi(color_split[0]);
 	obj->color.g = ft_atoi(color_split[1]);
 	obj->color.b = ft_atoi(color_split[2]);
-	free_split(pos_split);
 	free_split(axis_split);
-	return (free_split(color_split), 0);
+	return (free_split(color_split), free_split(pos_split), 0);
 }
 
 int	parse_cylinder(char **split, t_data *data)
@@ -63,7 +56,7 @@ int	parse_cylinder(char **split, t_data *data)
 		return (free(obj), 1);
 	obj->type = CYLINDER;
 	if (parse_object_options(split, obj))
-		return (free(obj),1);
+		return (free(obj), 1);
 	obj->next = data->objects;
 	data->objects = obj;
 	data->object_count++;
@@ -76,20 +69,14 @@ int	parse_cone_data(char **split, t_object *obj)
 	char	**axis_split;
 	char	**color_split;
 
-    if (!split[1] || !split[2] || !split[3]|| !split[4]|| !split[5])
-    {
-        ft_printf("Error: Invalid cone format\n");
-        return (1);
-    }
+	if (!split[1] || !split[2] || !split[3] || !split[4] || !split[5])
+		return (1);
 	pos_split = ft_split(split[1], ',');
 	axis_split = ft_split(split[2], ',');
 	color_split = ft_split(split[5], ',');
-	if (!pos_split || !pos_split[0] || !pos_split[1] || !pos_split[2] ||
-    	!axis_split || !axis_split[0] || !axis_split[1] || !axis_split[2] ||
-    	!color_split || !color_split[0] || !color_split[1] || !color_split[2])
-		return (free_split(pos_split), free_split(axis_split),
-			free_split(axis_split), free_split(color_split),
-			ft_printf("Error: Invalid cone format\n"), 1);
+	if (!is_split_valid(pos_split, axis_split, color_split))
+		return (free_split(pos_split),
+			free_split(axis_split), free_split(color_split), 1);
 	obj->pos.x = ft_atof(pos_split[0]);
 	obj->pos.y = ft_atof(pos_split[1]);
 	obj->pos.z = ft_atof(pos_split[2]);
@@ -102,8 +89,7 @@ int	parse_cone_data(char **split, t_object *obj)
 	obj->color.g = ft_atoi(color_split[1]);
 	obj->color.b = ft_atoi(color_split[2]);
 	free_split(pos_split);
-	free_split(axis_split);
-	return (free_split(color_split), 0);
+	return (free_split(color_split), free_split(axis_split), 0);
 }
 
 int	parse_cone(char **split, t_data *data)
@@ -126,4 +112,13 @@ int	parse_cone(char **split, t_data *data)
 	data->objects = obj;
 	data->object_count++;
 	return (0);
+}
+
+int	is_split_valid(char **split1, char **split2, char **split3)
+{
+	if (!split1 || !split1[0] || !split1[1] || !split1[2]
+		|| !split2 || !split2[0] || !split2[1] || !split2[2]
+		|| !split3 || !split3[0] || !split3[1] || !split3[2])
+		return (0);
+	return (1);
 }
