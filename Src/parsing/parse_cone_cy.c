@@ -6,7 +6,7 @@
 /*   By: jedurand <jedurand@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:24:15 by jedurand          #+#    #+#             */
-/*   Updated: 2024/09/10 13:21:34 by jedurand         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:32:41 by jedurand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	parse_cylinder(char **split, t_data *data)
 		return (free(obj), 1);
 	obj->type = CYLINDER;
 	if (parse_object_options(split, obj))
-		return (1);
+		return (free(obj),1);
 	obj->next = data->objects;
 	data->objects = obj;
 	data->object_count++;
@@ -121,7 +121,7 @@ int	parse_cone(char **split, t_data *data)
 		return (free(obj), 1);
 	obj->type = CONE;
 	if (parse_object_options(split, obj))
-		return (1);
+		return (free(obj), 1);
 	obj->next = data->objects;
 	data->objects = obj;
 	data->object_count++;

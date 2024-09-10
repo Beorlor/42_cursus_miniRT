@@ -6,7 +6,7 @@
 /*   By: jedurand <jedurand@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:24:28 by jedurand          #+#    #+#             */
-/*   Updated: 2024/09/10 13:19:26 by jedurand         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:33:00 by jedurand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	parse_sphere(char **split, t_data *data)
 		return (free(obj), 1);
 	obj->type = SPHERE;
 	if (parse_object_options(split, obj))
-		return (1);
+		return (free(obj),1);
 	obj->next = data->objects;
 	data->objects = obj;
 	data->object_count++;
